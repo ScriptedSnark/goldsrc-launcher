@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 * *' # Monthly
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.3
+      - name: Build
+        run: MSBuild.exe cl_dll/cl_dll.vcxproj /p:Configuration=Release
+      - name: Move builded EXE into specific directory
+        run: |
+            mkdir compiled
+            mv launcher_src/hl/Release/hl.exe ./compiled
+      - name: Deploy
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: hl_launcher
+          path: compiled
