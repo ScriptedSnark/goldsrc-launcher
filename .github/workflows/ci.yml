@@ -16,7 +16,7 @@ jobs:
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.0.3
       - name: Build
-        run: MSBuild.exe cl_dll/cl_dll.vcxproj /p:Configuration=Release
+        run: MSBuild.exe launcher_src/hl/hl.vcxproj /p:Configuration=Release
       - name: Move builded EXE into specific directory
         run: |
             mkdir compiled
