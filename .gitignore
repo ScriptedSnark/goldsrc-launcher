@@ -1,0 +1,8 @@
+*.obj
+*.pdb
+
+/.vs
+/projects/.vs
+/launcher_src/hl/Release
+/launcher_src/hl/Debug
+
