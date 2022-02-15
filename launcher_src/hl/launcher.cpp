@@ -22,6 +22,8 @@
 
 //TODO: Linux version doesn't use registry so don't include it - Solokiller
 
+bool TextMode = false;
+
 char com_gamedir[ MAX_PATH ] = {};
 
 IFileSystem* g_pFileSystem = nullptr;
@@ -210,6 +212,23 @@ bool Sys_GetExecutableName( char* pszFilename, size_t uiSize )
 	return GetModuleFileNameA( hThisModule, pszFilename, uiSize ) != 0;
 }
 
+BOOL WINAPI MyHandlerRoutine(DWORD dwCtrlType)
+{
+	TerminateProcess(GetCurrentProcess(), 2);
+	return TRUE;
+}
+
+void InitTextMode()
+{
+	AllocConsole();
+
+	SetConsoleCtrlHandler(MyHandlerRoutine, TRUE);
+
+	freopen("CONIN$", "rb", stdin);		// reopen stdin handle as console window input
+	freopen("CONOUT$", "wb", stdout);		// reopen stout handle as console window output
+	freopen("CONOUT$", "wb", stderr);		// reopen stderr handle as console window output
+}
+
 CSysModule* LoadFilesystemModule( const char* exename, bool bRunningSteam )
 {
 	auto pModule = Sys_LoadModule( filepath::FILESYSTEM_STDIO );
@@ -326,6 +345,7 @@ int CALLBACK WinMain(
 	if( LR_VerifySteamStatus( lpCmdLine, filepath::FILESYSTEM_STDIO, filepath::FILESYSTEM_STDIO ) )
 		return EXIT_SUCCESS;
 
+
 	/*
 
 	HANDLE hMutex = CreateMutexA( nullptr, FALSE, "ValveHalfLifeLauncherMutex" );
@@ -381,6 +401,13 @@ int CALLBACK WinMain(
 
 		strncpy( com_gamedir, pszGame, sizeof( com_gamedir ) );
 		com_gamedir[ sizeof( com_gamedir ) - 1 ] = '\0';
+	}
+
+	if (cmdline->CheckParm("-textmode", nullptr))
+	{
+		TextMode = true;
+		InitTextMode();
+		// TODO: hide Half-Life window - ScriptedSnark
 	}
 
 	//TODO: Could be the CRT heap init, but why is this here? - Solokiller
