@@ -410,6 +410,16 @@ int CALLBACK WinMain(
 		// TODO: hide Half-Life window - ScriptedSnark
 	}
 
+	// Make low priority?
+	if (cmdline->CheckParm("-low", nullptr))
+	{
+		SetPriorityClass(GetCurrentProcess(), IDLE_PRIORITY_CLASS);
+	}
+	else if (cmdline->CheckParm("-high", nullptr))
+	{
+		SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
+	}
+
 	//TODO: Could be the CRT heap init, but why is this here? - Solokiller
 	//sub_14032FD(0);
 
