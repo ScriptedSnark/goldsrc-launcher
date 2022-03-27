@@ -1,3 +1,5 @@
+# Work has been stopped here! Check [reGS](https://github.com/ScriptedSnark/reGS) for new updates...
+
 # GoldSrc Launcher
 
 GoldSrc-compatible launcher. Taken from [GoldSrcRebuild](https://github.com/Triang3l/GoldSourceRebuild) and modified as a project for VS2019 without CMake. Only x86 Debug/Release build. 
