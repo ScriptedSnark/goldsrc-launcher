@@ -1,6 +1,6 @@
 # GoldSrc Launcher
 
-GoldSrc-compatible launcher. Taken from [GoldSrcRebuild](https://github.com/Triang3l/GoldSourceRebuild) and modified as a project for VS2019 without CMake. Only x86 Debug/Release build. 
+GoldSrc-compatible launcher. Taken from [GoldSrcRebuild](https://github.com/Triang3l/GoldSourceRebuild) and modified as a project for VS2019 without CMake. Only x86 Debug/Release build. **Due to close-sourcing reGS, this repository is active again.**
 
 Half Life 1 SDK LICENSE
 ======================
