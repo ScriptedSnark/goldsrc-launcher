@@ -7,6 +7,7 @@ New features / parameters:
 - `-high` - sets high priority for hl.exe
 - `-textmode` - currently allocates console
 - Debug build doesn't unlink DLLs and create mutex.
+- Now stencil buffer is enabled and available for stencil shadows implementation!
 
 Half Life 1 SDK LICENSE
 ======================
