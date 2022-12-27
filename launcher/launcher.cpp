@@ -412,14 +412,12 @@ int CALLBACK WinMain(
 		SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 	}
 
-	//TODO: Could be the CRT heap init, but why is this here? - Solokiller
-	//sub_14032FD(0);
-
-	//Remove old libraries distributed with older Half-Life versions.
+#ifndef DEBUG
 	_unlink("mssv29.asi");
 	_unlink("mssv12.asi");
 	_unlink("mp3dec.asi");
 	_unlink("opengl32.dll");
+#endif
 
 	//If the game crashed during video mode initialization, reset video mode to default.
 	if (registry->ReadInt("CrashInitializingVideoMode", 0))
