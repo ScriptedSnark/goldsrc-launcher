@@ -345,9 +345,7 @@ int CALLBACK WinMain(
 	if( LR_VerifySteamStatus( lpCmdLine, filepath::FILESYSTEM_STDIO, filepath::FILESYSTEM_STDIO ) )
 		return EXIT_SUCCESS;
 
-
-	/*
-
+#ifndef DEBUG
 	HANDLE hMutex = CreateMutexA( nullptr, FALSE, "ValveHalfLifeLauncherMutex" );
 
 	if( NULL != hMutex )
@@ -362,8 +360,7 @@ int CALLBACK WinMain(
 		MessageBoxA( NULL, "Could not launch game.\nOnly one instance of this game can be run at a time.", "Fatal Error", MB_OK | MB_ICONERROR );
 		return EXIT_SUCCESS;
 	}
-
-	*/
+#endif
 
 	WSADATA WSAData;
 	WSAStartup( MAKEWORD( 2, 0 ), &WSAData );
@@ -590,8 +587,11 @@ int CALLBACK WinMain(
 
 	registry->Shutdown();
 
-	//ReleaseMutex( hMutex );
-	//CloseHandle( hMutex );
+#ifndef DEBUG
+	ReleaseMutex( hMutex );
+	CloseHandle( hMutex );
+#endif
+
 	WSACleanup();
 
 	return EXIT_SUCCESS;
