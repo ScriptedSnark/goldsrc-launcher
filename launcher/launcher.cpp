@@ -13,12 +13,12 @@
 
 #include <WinSock2.h>
 
-#include "../public/engine_launcher_api.h"
-#include "../common/FilePaths.h"
-#include "../public/FileSystem.h"
-#include "../common/ICommandLine.h"
-#include "../public/interface.h"
-#include "../public/IRegistry.h"
+#include "engine_launcher_api.h"
+#include "FilePaths.h"
+#include "FileSystem.h"
+#include "ICommandLine.h"
+#include "interface.h"
+#include "IRegistry.h"
 
 //TODO: Linux version doesn't use registry so don't include it - Solokiller
 

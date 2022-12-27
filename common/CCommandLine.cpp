@@ -4,7 +4,7 @@
 #include <cstring>
 #include <utility>
 
-#include "../public/tier0/platform.h"
+#include "tier0/platform.h"
 
 #include "CCommandLine.h"
 
