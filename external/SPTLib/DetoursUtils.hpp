@@ -1,5 +1,3 @@
-#ifdef HWHOOK
-
 #pragma once
 #include <string>
 
@@ -11,5 +9,3 @@ namespace DetoursUtils
 	void AttachDetours(const std::wstring& moduleName, size_t n, const std::pair<void**, void*> funcPairs[]);
 	void DetachDetours(const std::wstring& moduleName, size_t n, void** const functions[]);
 }
-
-#endif

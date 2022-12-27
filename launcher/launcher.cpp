@@ -20,6 +20,9 @@
 #include "interface.h"
 #include "IRegistry.h"
 
+#include "MinHook.h"
+#include "goldsrc_hook.h"
+
 //TODO: Linux version doesn't use registry so don't include it - Solokiller
 
 bool TextMode = false;
@@ -129,7 +132,7 @@ void LR_LaunchThroughSteam(const char* lpData)
 			RegQueryValueExA(phkResult, "SteamExe", 0u, &Type, reinterpret_cast<BYTE*>(szSteamFilename), &Data);
 			RegCloseKey(phkResult);
 		}
-
+		
 		if (*szSteamFilename)
 		{
 			//TODO: UTIL_FixSlashes - Solokiller
@@ -357,6 +360,8 @@ int CALLBACK WinMain(
 	}
 #endif
 
+	MH_Initialize();
+
 	WSADATA WSAData;
 	WSAStartup(MAKEWORD(2, 0), &WSAData);
 
@@ -491,6 +496,8 @@ int CALLBACK WinMain(
 
 		CSysModule* hLibModule = Sys_LoadModule(pszLibFileName);
 
+		HookEngine(); // it must be here!!!
+
 		if (hLibModule)
 		{
 			CreateInterfaceFn factoryFn = Sys_GetFactory(hLibModule);
@@ -574,6 +581,8 @@ int CALLBACK WinMain(
 		g_pFileSystem->Unmount();
 		Sys_UnloadModule(hModule);
 	} while (bRestartEngine);
+
+	MH_Uninitialize();
 
 	registry->Shutdown();
 

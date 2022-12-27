@@ -1,5 +1,3 @@
-#ifdef HWHOOK
-
 #include "sptlib-stdafx.hpp"
 
 #include "DetoursUtils.hpp"
@@ -84,5 +82,3 @@ namespace DetoursUtils
 		}
 	}
 }
-
-#endif

@@ -26,8 +26,6 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HWHOOK
-
 #include <windows.h>
 
 #ifndef ARRAYSIZE
@@ -316,5 +314,3 @@ BOOL CreateTrampolineFunction(PTRAMPOLINE ct)
 
     return TRUE;
 }
-
-#endif

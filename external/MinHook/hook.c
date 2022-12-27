@@ -26,8 +26,6 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HWHOOK
-
 #include <windows.h>
 #include <tlhelp32.h>
 #include <limits.h>
@@ -889,5 +887,3 @@ const char * WINAPI MH_StatusToString(MH_STATUS status)
 
     return "(unknown)";
 }
-
-#endif

@@ -1,5 +1,3 @@
-#ifdef HWHOOK
-
 #pragma once
 
 #ifdef _WIN32
@@ -32,5 +30,3 @@
 
 using std::uintptr_t;
 using std::size_t;
-
-#endif

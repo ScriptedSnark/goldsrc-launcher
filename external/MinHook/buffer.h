@@ -26,7 +26,6 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HWHOOK
 #pragma once
 
 // Size of each memory slot.
@@ -41,4 +40,3 @@ VOID   UninitializeBuffer(VOID);
 LPVOID AllocateBuffer(LPVOID pOrigin);
 VOID   FreeBuffer(LPVOID pBuffer);
 BOOL   IsExecutableAddress(LPVOID pAddress);
-#endif

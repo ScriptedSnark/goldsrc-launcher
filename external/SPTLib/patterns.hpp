@@ -1,5 +1,3 @@
-#ifdef HWHOOK
-
 #pragma once
 
 #include <Windows.h>
@@ -192,5 +190,3 @@ namespace patterns
 			NAME_PATTERNS(name, __VA_ARGS__) \
 		);
 }
-
-#endif

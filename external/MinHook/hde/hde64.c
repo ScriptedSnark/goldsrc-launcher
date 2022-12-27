@@ -5,8 +5,6 @@
  *
  */
 
-#ifdef HWHOOK
-
 #if defined(_M_X64) || defined(__x86_64__)
 
 #include "hde64.h"
@@ -337,5 +335,3 @@ unsigned int hde64_disasm(const void *code, hde64s *hs)
 }
 
 #endif // defined(_M_X64) || defined(__x86_64__)
-
-#endif

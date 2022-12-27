@@ -7,8 +7,6 @@
  *
  */
 
-#ifdef HWHOOK
-
 #ifndef _HDE64_H_
 #define _HDE64_H_
 
@@ -112,5 +110,3 @@ unsigned int hde64_disasm(const void *code, hde64s *hs);
 #endif
 
 #endif /* _HDE64_H_ */
-
-#endif

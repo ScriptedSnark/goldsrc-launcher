@@ -26,8 +26,6 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HWHOOK
-
 #include <windows.h>
 #include "buffer.h"
 
@@ -312,5 +310,3 @@ BOOL IsExecutableAddress(LPVOID pAddress)
 
     return (mi.State == MEM_COMMIT && (mi.Protect & PAGE_EXECUTE_FLAGS));
 }
-
-#endif

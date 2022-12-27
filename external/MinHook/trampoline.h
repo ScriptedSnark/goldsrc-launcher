@@ -26,8 +26,6 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HWHOOK
-
 #pragma once
 
 #pragma pack(push, 1)
@@ -105,5 +103,3 @@ typedef struct _TRAMPOLINE
 } TRAMPOLINE, *PTRAMPOLINE;
 
 BOOL CreateTrampolineFunction(PTRAMPOLINE ct);
-
-#endif

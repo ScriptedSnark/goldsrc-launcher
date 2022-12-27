@@ -1,5 +1,3 @@
-#ifdef HWHOOK
-
 #include <array>
 #include "MemUtils.h"
 #include "patterns.hpp"
@@ -79,5 +77,3 @@ protected:
 	void* m_Base;
 	size_t m_Length;
 } Utils;
-
-#endif

@@ -5,8 +5,6 @@
  *
  */
 
-#ifdef HWHOOK
-
 #if defined(_M_IX86) || defined(__i386__)
 
 #include "hde32.h"
@@ -326,5 +324,3 @@ unsigned int hde32_disasm(const void *code, hde32s *hs)
 }
 
 #endif // defined(_M_IX86) || defined(__i386__)
-
-#endif

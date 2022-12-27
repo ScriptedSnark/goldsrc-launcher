@@ -9,6 +9,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="MinHook">
+      <UniqueIdentifier>{ecfeca8c-442e-4e62-930a-2f9c781142d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SPTLib">
+      <UniqueIdentifier>{9c04f316-a40c-40b5-875b-1561d34ef8ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{aca49dda-024e-4778-b15f-35c5b5b5c24d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="launcher.cpp">
@@ -26,6 +35,27 @@
     <ClCompile Include="..\common\FilePaths.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\external\MinHook\buffer.c">
+      <Filter>MinHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\MinHook\hook.c">
+      <Filter>MinHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\MinHook\trampoline.c">
+      <Filter>MinHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\MinHook\hde\hde32.c">
+      <Filter>MinHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\MinHook\hde\hde64.c">
+      <Filter>MinHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\SPTLib\DetoursUtils.cpp">
+      <Filter>SPTLib</Filter>
+    </ClCompile>
+    <ClCompile Include="goldsrc_hook.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hl.rc">
@@ -40,6 +70,48 @@
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\buffer.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\MinHook.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\trampoline.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\hde\hde32.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\hde\hde64.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\hde\pstdint.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\hde\table32.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\MinHook\hde\table64.h">
+      <Filter>MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\SPTLib\DetoursUtils.hpp">
+      <Filter>SPTLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\SPTLib\patterns.hpp">
+      <Filter>SPTLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\SPTLib\patterns_macros.hpp">
+      <Filter>SPTLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\SPTLib\sptlib-stdafx.hpp">
+      <Filter>SPTLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\SPTLib\Utils.hpp">
+      <Filter>SPTLib</Filter>
+    </ClInclude>
+    <ClInclude Include="goldsrc_hook.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

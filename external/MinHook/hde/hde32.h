@@ -7,8 +7,6 @@
  *
  */
 
-#ifdef HWHOOK
-
 #ifndef _HDE32_H_
 #define _HDE32_H_
 
@@ -105,5 +103,3 @@ unsigned int hde32_disasm(const void *code, hde32s *hs);
 #endif
 
 #endif /* _HDE32_H_ */
-
-#endif

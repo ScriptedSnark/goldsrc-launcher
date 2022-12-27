@@ -26,8 +26,6 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef HWHOOK
-
 #pragma once
 
 #if !(defined _M_IX86) && !(defined _M_X64) && !(defined __i386__) && !(defined __x86_64__)
@@ -184,6 +182,4 @@ extern "C" {
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
