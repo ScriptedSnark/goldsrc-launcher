@@ -8,6 +8,14 @@
 #define GOLDSRC_HOOK_H_GUARD
 #pragma once
 
+#include "SDL2/SDL.h"
+
+typedef SDL_Window* (*_SDL_CreateWindow)(const char* title, int x, int y, int w, int h, Uint32 flags);
+typedef int (*_SDL_GL_SetAttribute)(SDL_GLattr attr, int value);
+
+extern _SDL_CreateWindow ORIG_SDL_CreateWindow;
+extern _SDL_GL_SetAttribute ORIG_SDL_GL_SetAttribute;
+
 void HookEngine();
 
 #endif //GOLDSRC_HOOK_H_GUARD
