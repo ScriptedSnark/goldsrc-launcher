@@ -23,7 +23,8 @@
 #include "MinHook.h"
 #include "goldsrc_hook.h"
 
-//TODO: Linux version doesn't use registry so don't include it - Solokiller
+#define HARDWARE_ENGINE "hw.dll"
+#define SOFTWARE_ENGINE "sw.dll"
 
 bool TextMode = false;
 
@@ -319,18 +320,15 @@ void SetEngineDLL(const char** ppEngineDLL)
 	registry->WriteString("EngineDLL", *ppEngineDLL);
 }
 
-bool OnVideoModeFailed()
+bool OnVideoModeFailed(void)
 {
 	registry->WriteInt("ScreenBPP", 16);
 	registry->WriteInt("ScreenHeight", 640);
 	registry->WriteInt("ScreenWidth", 480);
 
-	registry->WriteString("EngineDLL", "hw.dll");
+	registry->WriteString("EngineDLL", HARDWARE_ENGINE);
 
-	return MessageBoxA(
-			   NULL,
-			   "The specified video mode is not supported.", "Video mode change failure",
-			   MB_OKCANCEL | MB_ICONERROR | MB_ICONQUESTION) == IDOK;
+	return MessageBox(NULL, "The specified video mode is not supported.", "Video mode change failure", MB_OKCANCEL | MB_ICONERROR | MB_ICONQUESTION) == IDOK;
 }
 
 int CALLBACK WinMain(
