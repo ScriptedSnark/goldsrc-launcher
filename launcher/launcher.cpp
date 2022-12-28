@@ -14,7 +14,6 @@
 #include <WinSock2.h>
 
 #include "engine_launcher_api.h"
-#include "FilePaths.h"
 #include "FileSystem.h"
 #include "ICommandLine.h"
 #include "interface.h"
@@ -154,10 +153,6 @@ int CALLBACK WinMain(
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	//If we aren't allowed to continue launching, exit now.
-	if (LR_VerifySteamStatus(lpCmdLine, filepath::FILESYSTEM_STDIO, filepath::FILESYSTEM_STDIO))
-		return EXIT_SUCCESS;
-
 #ifndef DEBUG
 	HANDLE hMutex = CreateMutexA(nullptr, FALSE, "ValveHalfLifeLauncherMutex");
 
@@ -286,19 +281,15 @@ int CALLBACK WinMain(
 	do
 	{
 		//Load and mount the filesystem.
-		CSysModule* hModule = LoadFilesystemModule(Filename, cmdline->CheckParm("-game", nullptr) != nullptr);
+		CSysModule* hModule = LoadFilesystemModule(Filename);
 
 		if (!hModule)
 			break;
 
-		{
-			CreateInterfaceFn factoryFn = Sys_GetFactory(hModule);
-
-			g_pFileSystem = static_cast<IFileSystem*>(factoryFn(FILESYSTEM_INTERFACE_VERSION, nullptr));
-		}
+		CreateInterfaceFn factoryFn = Sys_GetFactory(hModule);
+		g_pFileSystem = (IFileSystem*)factoryFn(FILESYSTEM_INTERFACE_VERSION, nullptr);
 
 		g_pFileSystem->Mount();
-
 		g_pFileSystem->AddSearchPath(UTIL_GetBaseDir(), "ROOT");
 
 		bRestartEngine = false;
