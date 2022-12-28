@@ -139,21 +139,18 @@ bool OnVideoModeFailed(void)
 	return MessageBox(NULL, "The specified video mode is not supported.", "Video mode change failure", MB_OKCANCEL | MB_ICONERROR | MB_ICONQUESTION) == IDOK;
 }
 
-int CALLBACK WinMain(
-	HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine,
-	int nCmdShow)
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	static char szNewCommandParams[2048];
+	char szFilename[256];
+
 #ifndef DEBUG
-	HANDLE hMutex = CreateMutexA(nullptr, FALSE, "ValveHalfLifeLauncherMutex");
+	HANDLE hMutex = CreateMutex(nullptr, FALSE, "ValveHalfLifeLauncherMutex");
 
 	if (NULL != hMutex)
-	{
 		GetLastError();
-	}
 
-	DWORD dwMutexResult = WaitForSingleObject(hMutex, 0);
+	DWORD dwMutexResult = ::WaitForSingleObject(hMutex, 0);
 
 	if (dwMutexResult != WAIT_OBJECT_0 && dwMutexResult != WAIT_ABANDONED)
 	{
@@ -165,42 +162,28 @@ int CALLBACK WinMain(
 	MH_Initialize();
 
 	WSADATA WSAData;
-	WSAStartup(MAKEWORD(2, 0), &WSAData);
+	::WSAStartup(MAKEWORD(2, 0), &WSAData);
 
-	registry->Init();
+	registry->Init(); 
 
 	cmdline->CreateCmdLine(GetCommandLineA());
 
-	char Filename[256];
+	Sys_GetExecutableName(szFilename, sizeof(szFilename));
 
-	Sys_GetExecutableName(Filename, sizeof(Filename));
+	char* pszLastSlash = strrchr(szFilename, '\\') + 1;
 
-	//If this isn't hl.exe, force the game to be whichever game this exe is for.
+	if (stricmp("hl.exe", pszLastSlash) && !cmdline->CheckParm("-game", nullptr))
 	{
-		char* pszLastSlash = strrchr(Filename, '\\') + 1;
-
-		//E.g. cstrike.exe -> -game cstrike.
-		if (_stricmp("hl.exe", pszLastSlash) && !cmdline->CheckParm("-game", nullptr))
-		{
-			//This assumes that the program extension is ".exe" or another 4 character long extension.
-			pszLastSlash[strlen(pszLastSlash) - 4] = '\0';
-			cmdline->SetParm("-game", pszLastSlash);
-		}
+		pszLastSlash[strlen(pszLastSlash) - 4] = 0;
+		cmdline->SetParm("-game", pszLastSlash);
 	}
 
-	//Set the game name.
-	{
-		//TODO: this is wrong. pszGame will point to the rest of the command line after and including -game.
-		//It should copy the second parameter's result value. - Solokiller
-		const char* pszGame = cmdline->CheckParm("-game", nullptr);
+	const char* pszGame = cmdline->CheckParm("-game", nullptr);
 
-		//Default to Half-Life.
-		if (!pszGame)
-			pszGame = "valve";
-
+	if (pszGame)
 		strncpy(com_gamedir, pszGame, sizeof(com_gamedir));
-		com_gamedir[sizeof(com_gamedir) - 1] = '\0';
-	}
+	else
+		strcpy(com_gamedir, "valve");
 
 	if (cmdline->CheckParm("-textmode", nullptr))
 		InitTextMode();
@@ -218,16 +201,14 @@ int CALLBACK WinMain(
 	_unlink("opengl32.dll");
 #endif
 
-	//If the game crashed during video mode initialization, reset video mode to default.
 	if (registry->ReadInt("CrashInitializingVideoMode", 0))
 	{
 		registry->WriteInt("CrashInitializingVideoMode", 0);
 
-		const char* pszEngineDLL = registry->ReadString("EngineDLL", "hw.dll");
+		const char* pszEngineDLL = registry->ReadString("EngineDLL", HARDWARE_ENGINE);
 
-		if (!_stricmp(pszEngineDLL, "hw.dll"))
+		if (!stricmp(pszEngineDLL, HARDWARE_ENGINE))
 		{
-			const char* pszCaption = "Video mode change failure";
 			const char* pszMessage;
 
 			if (registry->ReadInt("EngineD3D", 0))
@@ -240,16 +221,14 @@ int CALLBACK WinMain(
 			}
 			else
 			{
-				//TODO: Shouldn't this be sw.dll? - Solokiller
-				registry->WriteString("EngineDLL", "hw.dll");
+				registry->WriteString("EngineDLL", HARDWARE_ENGINE);
 
 				pszMessage =
 					"The game has detected that the previous attempt to start in openGL video mode failed.\n"
 					"The game will now run in software mode.";
 			}
 
-			//Ask the user if they want to continue.
-			if (MessageBoxA(NULL, pszMessage, pszCaption, MB_OKCANCEL | MB_ICONERROR | MB_ICONQUESTION) != IDOK)
+			if (MessageBox(NULL, pszMessage, "Video mode change failure", MB_OKCANCEL | MB_ICONERROR | MB_ICONQUESTION) != IDOK)
 				return EXIT_SUCCESS;
 
 			registry->WriteInt("ScreenBPP", 16);
@@ -258,28 +237,25 @@ int CALLBACK WinMain(
 		}
 	}
 
-	static char szNewCommandParams[2048];
-
+	int runResult;
 	bool bRestartEngine = false;
 
 	do
 	{
-		//Load and mount the filesystem.
-		CSysModule* hModule = LoadFilesystemModule(Filename);
+		CSysModule* hModule = LoadFilesystemModule(szFilename);
 
 		if (!hModule)
 			break;
 
 		CreateInterfaceFn factoryFn = Sys_GetFactory(hModule);
-		g_pFileSystem = (IFileSystem*)factoryFn(FILESYSTEM_INTERFACE_VERSION, nullptr);
 
+		g_pFileSystem = (IFileSystem*)factoryFn(FILESYSTEM_INTERFACE_VERSION, nullptr);
 		g_pFileSystem->Mount();
 		g_pFileSystem->AddSearchPath(UTIL_GetBaseDir(), "ROOT");
 
 		bRestartEngine = false;
-		EngineRunResult runResult = ENGRUN_QUITTING;
-
-		szNewCommandParams[0] = '\0';
+		runResult = 0;
+		szNewCommandParams[0] = 0;
 
 		const char* pszLibFileName;
 		SetEngineDLL(&pszLibFileName);
@@ -297,16 +273,7 @@ int CALLBACK WinMain(
 				IEngineAPI* pEngine = static_cast<IEngineAPI*>(factoryFn(ENGINE_LAUNCHER_INTERFACE_VERSION, nullptr));
 
 				if (pEngine)
-				{
-					runResult = static_cast<EngineRunResult>(
-						pEngine->Run(
-							hInstance,
-							UTIL_GetBaseDir(),
-							cmdline->GetCmdLine(),
-							szNewCommandParams,
-							Sys_GetFactoryThis(),
-							Sys_GetFactory(hModule)));
-				}
+					runResult = pEngine->Run(hInstance,	UTIL_GetBaseDir(), cmdline->GetCmdLine(), szNewCommandParams, Sys_GetFactoryThis(), Sys_GetFactory(hModule));
 			}
 
 			Sys_UnloadModule(hLibModule);
@@ -321,21 +288,17 @@ int CALLBACK WinMain(
 
 		switch (runResult)
 		{
-		case ENGRUN_QUITTING:
+		case 0:
 			bRestartEngine = false;
 			break;
-		case ENGRUN_CHANGED_VIDEOMODE:
+		case 1:
 			bRestartEngine = true;
 			break;
-		case ENGRUN_UNSUPPORTED_VIDEOMODE:
+		case 2:
 			bRestartEngine = OnVideoModeFailed();
-			break;
-		default:
 			break;
 		}
 
-		//If we're restarting, remove any parameters that could affect video mode changes.
-		//Also remove parameters that trigger events automatically, such as connecting to a server.
 		cmdline->RemoveParm("-sw");
 		cmdline->RemoveParm("-startwindowed");
 		cmdline->RemoveParm("-windowed");
@@ -353,19 +316,12 @@ int CALLBACK WinMain(
 		cmdline->RemoveParm("+connect");
 		cmdline->SetParm("-novid", nullptr);
 
-		//User changed game.
 		if (strstr(szNewCommandParams, "-game"))
-		{
 			cmdline->RemoveParm("-game");
-		}
 
-		//Remove saved game load command if new command is present.
 		if (strstr(szNewCommandParams, "+load"))
-		{
 			cmdline->RemoveParm("+load");
-		}
 
-		//Append new command line to process properly.
 		cmdline->AppendParm(szNewCommandParams, nullptr);
 
 		g_pFileSystem->Unmount();
@@ -377,11 +333,11 @@ int CALLBACK WinMain(
 	registry->Shutdown();
 
 #ifndef DEBUG
-	ReleaseMutex(hMutex);
-	CloseHandle(hMutex);
+	::ReleaseMutex(hMutex);
+	::CloseHandle(hMutex);
 #endif
 
-	WSACleanup();
+	::WSACleanup();
 
 	return EXIT_SUCCESS;
 }

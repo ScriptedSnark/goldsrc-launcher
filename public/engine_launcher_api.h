@@ -3,14 +3,6 @@
 
 #include "interface.h"
 
-//TODO: these are estimates. Confirm when engine is reverse engineered. - Solokiller
-enum EngineRunResult
-{
-	ENGRUN_QUITTING = 0,
-	ENGRUN_CHANGED_VIDEOMODE = 1,
-	ENGRUN_UNSUPPORTED_VIDEOMODE = 2
-};
-
 /**
 *	Interface exposed by the engine to the launcher.
 */
