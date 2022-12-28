@@ -32,13 +32,6 @@ char com_gamedir[MAX_PATH] = {};
 
 IFileSystem* g_pFileSystem = nullptr;
 
-bool LR_FileExists(const char* pszFilename)
-{
-	struct stat buf;
-
-	return stat(pszFilename, &buf) == 0;
-}
-
 bool Sys_GetExecutableName(char* out, int len)
 {
 	if (!::GetModuleFileName((HINSTANCE)GetModuleHandle(NULL), out, len))
