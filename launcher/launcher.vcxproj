@@ -98,7 +98,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CCommandLine.cpp" />
-    <ClCompile Include="..\common\FilePaths.cpp" />
     <ClCompile Include="..\external\MinHook\buffer.c" />
     <ClCompile Include="..\external\MinHook\hde\hde32.c" />
     <ClCompile Include="..\external\MinHook\hde\hde64.c" />

@@ -231,31 +231,28 @@ void InitTextMode()
 	freopen("CONOUT$", "wb", stderr); // reopen stderr handle as console window output
 }
 
-CSysModule* LoadFilesystemModule(const char* exename, bool bRunningSteam)
+CSysModule* LoadFilesystemModule(const char* exename)
 {
-	CSysModule* pModule = Sys_LoadModule(filepath::FILESYSTEM_STDIO);
+	CSysModule* pModule = Sys_LoadModule("filesystem_stdio.dll");
 
-	if (!pModule)
+	if (pModule)
+		return pModule;
+
+	if (strchr(exename, ';'))
 	{
-		if (strchr(exename, ';'))
-		{
-			MessageBoxA(NULL, "Game cannot be run from directories containing the semicolon char", "Fatal Error", MB_ICONERROR);
-			return nullptr;
-		}
+		MessageBox(NULL, "Game cannot be run from directories containing the semicolon char", "Fatal Error", MB_ICONERROR);
+		return nullptr;
+	}
 
-		struct _finddata_t find_data;
+	struct _finddata_t find_data;
+	intptr_t result = _findfirst("filesystem_stdio.dll", &find_data);
 
-		intptr_t result = _findfirst(filepath::FILESYSTEM_STDIO, &find_data);
-
-		if (result == -1)
-		{
-			MessageBoxA(NULL, "Could not find filesystem dll to load.", "Fatal Error", MB_ICONERROR);
-		}
-		else
-		{
-			MessageBoxA(NULL, "Could not load filesystem dll.", "Fatal Error", MB_ICONERROR);
-			_findclose(result);
-		}
+	if (result == -1)
+		MessageBox(NULL, "Could not find FileSystem_stdio.dll to load.", "Fatal Error", MB_ICONERROR);
+	else
+	{
+		MessageBox(NULL, "Could not load FileSystem_stdio.dll.", "Fatal Error", MB_ICONERROR);
+		_findclose(result);
 	}
 
 	return pModule;

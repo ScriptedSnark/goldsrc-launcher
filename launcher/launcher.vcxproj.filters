@@ -32,9 +32,6 @@
     <ClCompile Include="..\common\CCommandLine.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\FilePaths.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\external\MinHook\buffer.c">
       <Filter>MinHook</Filter>
     </ClCompile>
