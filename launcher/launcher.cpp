@@ -25,10 +25,10 @@ IFileSystem* g_pFileSystem = nullptr;
 
 bool Sys_GetExecutableName(char* out, int len)
 {
-	if (!::GetModuleFileName((HINSTANCE)GetModuleHandle(NULL), out, len))
-		return false;
+	if (::GetModuleFileName((HINSTANCE)GetModuleHandle(NULL), out, len))
+		return true;
 
-	return true;
+	return false;
 }
 
 BOOL WINAPI MyHandlerRoutine(DWORD dwCtrlType)
