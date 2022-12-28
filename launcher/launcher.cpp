@@ -23,6 +23,9 @@
 char com_gamedir[MAX_PATH];
 IFileSystem* g_pFileSystem = nullptr;
 
+//-----------------------------------------------------------------------------
+// Getting executable name
+//-----------------------------------------------------------------------------
 bool Sys_GetExecutableName(char* out, int len)
 {
 	if (::GetModuleFileName((HINSTANCE)GetModuleHandle(NULL), out, len))
@@ -31,12 +34,18 @@ bool Sys_GetExecutableName(char* out, int len)
 	return false;
 }
 
+//-----------------------------------------------------------------------------
+// Handler routine for allocated console in text mode
+//-----------------------------------------------------------------------------
 BOOL WINAPI MyHandlerRoutine(DWORD dwCtrlType)
 {
 	TerminateProcess(GetCurrentProcess(), 2);
 	return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+// Initialize text mode (allocate console and print any output)
+//-----------------------------------------------------------------------------
 void InitTextMode()
 {
 	AllocConsole();
@@ -48,6 +57,9 @@ void InitTextMode()
 	freopen("CONOUT$", "wb", stderr); // reopen stderr handle as console window output
 }
 
+//-----------------------------------------------------------------------------
+// Loading filesystem_stdio.dll (GoldSrc file system)
+//-----------------------------------------------------------------------------
 CSysModule* LoadFilesystemModule(const char* exename)
 {
 	CSysModule* pModule = Sys_LoadModule("filesystem_stdio.dll");
@@ -75,6 +87,9 @@ CSysModule* LoadFilesystemModule(const char* exename)
 	return pModule;
 }
 
+//-----------------------------------------------------------------------------
+// Get base directory (directory where hl.exe is running from)
+//-----------------------------------------------------------------------------
 char* UTIL_GetBaseDir(void)
 {
 	static char basedir[MAX_PATH];
@@ -101,6 +116,9 @@ char* UTIL_GetBaseDir(void)
 	return basedir;
 }
 
+//-----------------------------------------------------------------------------
+// Set engine DLL for loading
+//-----------------------------------------------------------------------------
 void SetEngineDLL(const char** ppEngineDLL)
 {
 	const char* pEngineDLLSetting = registry->ReadString("EngineDLL", HARDWARE_ENGINE);
@@ -128,6 +146,9 @@ void SetEngineDLL(const char** ppEngineDLL)
 	registry->WriteString("EngineDLL", *ppEngineDLL);
 }
 
+//-----------------------------------------------------------------------------
+// When video mode is failed, execute this code
+//-----------------------------------------------------------------------------
 bool OnVideoModeFailed(void)
 {
 	registry->WriteInt("ScreenBPP", 16);
@@ -139,6 +160,9 @@ bool OnVideoModeFailed(void)
 	return MessageBox(NULL, "The specified video mode is not supported.", "Video mode change failure", MB_OKCANCEL | MB_ICONERROR | MB_ICONQUESTION) == IDOK;
 }
 
+//-----------------------------------------------------------------------------
+// The real entry point for hl.exe
+//-----------------------------------------------------------------------------
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	static char szNewCommandParams[2048];
