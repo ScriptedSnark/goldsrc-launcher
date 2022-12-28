@@ -295,26 +295,26 @@ char* UTIL_GetBaseDir()
 
 void SetEngineDLL(const char** ppEngineDLL)
 {
-	*ppEngineDLL = "hw.dll";
+	const char* pEngineDLLSetting = registry->ReadString("EngineDLL", HARDWARE_ENGINE);
 
-	const char* pEngineDLLSetting = registry->ReadString("EngineDLL", "hw.dll");
-	if (_stricmp(pEngineDLLSetting, "hw.dll"))
+	*ppEngineDLL = HARDWARE_ENGINE;
+
+	if (!stricmp(pEngineDLLSetting, HARDWARE_ENGINE))
 	{
-		if (!_stricmp(pEngineDLLSetting, "sw.dll"))
-			*ppEngineDLL = "sw.dll";
+		*ppEngineDLL = HARDWARE_ENGINE;
 	}
-	else
+	else if (!stricmp(pEngineDLLSetting, SOFTWARE_ENGINE))
 	{
-		*ppEngineDLL = "hw.dll";
+		*ppEngineDLL = SOFTWARE_ENGINE;
 	}
 
 	if (cmdline->CheckParm("-soft", nullptr) || cmdline->CheckParm("-software", nullptr))
 	{
-		*ppEngineDLL = "sw.dll";
+		*ppEngineDLL = SOFTWARE_ENGINE;
 	}
 	else if (cmdline->CheckParm("-gl", nullptr) || cmdline->CheckParm("-d3d", nullptr))
 	{
-		*ppEngineDLL = "hw.dll";
+		*ppEngineDLL = HARDWARE_ENGINE;
 	}
 
 	registry->WriteString("EngineDLL", *ppEngineDLL);
