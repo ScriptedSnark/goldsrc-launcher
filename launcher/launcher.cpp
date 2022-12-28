@@ -261,36 +261,30 @@ CSysModule* LoadFilesystemModule(const char* exename, bool bRunningSteam)
 	return pModule;
 }
 
-static char szLongPath[MAX_PATH] = {};
-
-/**
-*	Gets the directory that this executable is running from.
-*/
-char* UTIL_GetBaseDir()
+char* UTIL_GetBaseDir(void)
 {
-	char Filename[MAX_PATH];
+	static char basedir[MAX_PATH];
+	char szFilename[MAX_PATH], *pBuffer;
 
-	if (GetModuleFileNameA(NULL, Filename, sizeof(Filename)))
+	if (GetModuleFileName(NULL, szFilename, sizeof(szFilename)))
 	{
-		GetLongPathNameA(Filename, szLongPath, sizeof(szLongPath));
+		GetLongPathName(szFilename, basedir, sizeof(basedir));
 
-		char* pszLastSlash = strrchr(szLongPath, '\\');
+		pBuffer = strrchr(basedir, '\\');
 
-		if (*pszLastSlash)
-			pszLastSlash[1] = '\0';
+		if (*pBuffer)
+			*(pBuffer + 1) = '\0';
 
-		const size_t uiLength = strlen(szLongPath);
+		int j = strlen(basedir);
 
-		if (uiLength > 0)
+		if (j > 0)
 		{
-			char* pszEnd = &szLongPath[uiLength - 1];
-
-			if (*pszEnd == '\\' || *pszEnd == '/')
-				*pszEnd = '\0';
+			if ((basedir[j - 1] == '\\') || (basedir[j - 1] == '/'))
+				basedir[j - 1] = 0;
 		}
 	}
 
-	return szLongPath;
+	return basedir;
 }
 
 void SetEngineDLL(const char** ppEngineDLL)
