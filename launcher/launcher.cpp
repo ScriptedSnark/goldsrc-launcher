@@ -207,11 +207,12 @@ bool LR_VerifySteamStatus(const char* pszCommandLine, const char* pszFileSystemS
 #endif
 }
 
-bool Sys_GetExecutableName(char* pszFilename, size_t uiSize)
+bool Sys_GetExecutableName(char* out, int len)
 {
-	HMODULE hThisModule = GetModuleHandleA(nullptr);
-	//TODO: won't work properly on WinXP, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms683197(v=vs.85).aspx - Solokiller
-	return GetModuleFileNameA(hThisModule, pszFilename, uiSize) != 0;
+	if (!::GetModuleFileName((HINSTANCE)GetModuleHandle(NULL), out, len))
+		return false;
+
+	return true;
 }
 
 BOOL WINAPI MyHandlerRoutine(DWORD dwCtrlType)
