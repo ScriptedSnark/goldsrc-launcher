@@ -1,17 +1,12 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-
-#include <direct.h>
-#include <io.h>
-#include <process.h>
-
 #include <WinSock2.h>
+
+#include <io.h>
 
 #include "engine_launcher_api.h"
 #include "FileSystem.h"
@@ -25,10 +20,7 @@
 #define HARDWARE_ENGINE "hw.dll"
 #define SOFTWARE_ENGINE "sw.dll"
 
-bool TextMode = false;
-
-char com_gamedir[MAX_PATH] = {};
-
+char com_gamedir[MAX_PATH];
 IFileSystem* g_pFileSystem = nullptr;
 
 bool Sys_GetExecutableName(char* out, int len)
@@ -211,21 +203,13 @@ int CALLBACK WinMain(
 	}
 
 	if (cmdline->CheckParm("-textmode", nullptr))
-	{
-		TextMode = true;
 		InitTextMode();
-		// TODO: hide Half-Life window - ScriptedSnark
-	}
 
 	// Make low priority?
 	if (cmdline->CheckParm("-low", nullptr))
-	{
 		SetPriorityClass(GetCurrentProcess(), IDLE_PRIORITY_CLASS);
-	}
 	else if (cmdline->CheckParm("-high", nullptr))
-	{
 		SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
-	}
 
 #ifndef DEBUG
 	_unlink("mssv29.asi");
