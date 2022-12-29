@@ -64,8 +64,7 @@ void HookSDL2()
 		void* pSDL_GL_SwapWindow = (void*)ORIG_SDL_GL_SwapWindow;
 		MH_CreateHook(pSDL_GL_SwapWindow, (void*)HOOKED_SDL_GL_SwapWindow, (void**)&ORIG_SDL_GL_SwapWindow);
 
-		SDL_Window* window = SDL_GetWindowFromID(1);
-		ImGui_ImplSdl_Init(window);
+		ImGui_ImplSdl_Init(SDL_GetWindowFromID(1));
 
 		SDL_AddEventWatch(ImGUI_ProcessEvent, NULL);
 	}
