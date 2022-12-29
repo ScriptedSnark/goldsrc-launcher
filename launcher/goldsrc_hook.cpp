@@ -23,7 +23,7 @@ void HOOKED_SDL_GL_SwapWindow(SDL_Window* window)
 {
 	ImGui_ImplSdl_NewFrame(window);
 
-	ImGui::ShowTestWindow();
+	//ImGui::ShowTestWindow();
 
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	ImGui::Render();
