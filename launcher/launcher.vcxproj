@@ -124,6 +124,7 @@
     <ClInclude Include="..\external\SPTLib\sptlib-stdafx.hpp" />
     <ClInclude Include="..\external\SPTLib\Utils.hpp" />
     <ClInclude Include="goldsrc_hook.h" />
+    <ClInclude Include="goldsrc_patterns.hpp" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
