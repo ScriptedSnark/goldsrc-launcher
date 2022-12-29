@@ -8,11 +8,7 @@ on:
     - cron: '0 0 1 * *' # Monthly
 
 paths-ignore:
-  - '*.md'
-  - 'LICENSE'
-  - '.gitignore'
-  - '.gitattributes'
-  - '.clang-format'
+  - 'README.md'
 
 
 jobs:
