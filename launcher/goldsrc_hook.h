@@ -12,9 +12,11 @@
 
 typedef SDL_Window* (*_SDL_CreateWindow)(const char* title, int x, int y, int w, int h, Uint32 flags);
 typedef int (*_SDL_GL_SetAttribute)(SDL_GLattr attr, int value);
+typedef void (*_SDL_GL_SwapWindow)(SDL_Window* window);
 
 extern _SDL_CreateWindow ORIG_SDL_CreateWindow;
 extern _SDL_GL_SetAttribute ORIG_SDL_GL_SetAttribute;
+extern _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow;
 
 void HookEngine();
 

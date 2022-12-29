@@ -60,7 +60,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
@@ -71,7 +71,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;wsock32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;wsock32.lib;ws2_32.lib;opengl32.lib;../external/SDL2/SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,7 +80,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;WINDOWS_IGNORE_PACKING_MISMATCH;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
@@ -93,11 +93,15 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;wsock32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;wsock32.lib;ws2_32.lib;opengl32.lib;../external/SDL2/SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CCommandLine.cpp" />
+    <ClCompile Include="..\external\ImGUI\imgui.cpp" />
+    <ClCompile Include="..\external\ImGUI\imgui_demo.cpp" />
+    <ClCompile Include="..\external\ImGUI\imgui_draw.cpp" />
+    <ClCompile Include="..\external\ImGUI\imgui_impl_sdl.cpp" />
     <ClCompile Include="..\external\MinHook\buffer.c" />
     <ClCompile Include="..\external\MinHook\hde\hde32.c" />
     <ClCompile Include="..\external\MinHook\hde\hde64.c" />
@@ -110,6 +114,13 @@
     <ClCompile Include="launcher.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\external\ImGUI\imconfig.h" />
+    <ClInclude Include="..\external\ImGUI\imgui.h" />
+    <ClInclude Include="..\external\ImGUI\imgui_impl_sdl.h" />
+    <ClInclude Include="..\external\ImGUI\imgui_internal.h" />
+    <ClInclude Include="..\external\ImGUI\stb_rect_pack.h" />
+    <ClInclude Include="..\external\ImGUI\stb_textedit.h" />
+    <ClInclude Include="..\external\ImGUI\stb_truetype.h" />
     <ClInclude Include="..\external\MinHook\buffer.h" />
     <ClInclude Include="..\external\MinHook\hde\hde32.h" />
     <ClInclude Include="..\external\MinHook\hde\hde64.h" />

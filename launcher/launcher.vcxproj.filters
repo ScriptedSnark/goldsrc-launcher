@@ -18,6 +18,9 @@
     <Filter Include="Headers">
       <UniqueIdentifier>{aca49dda-024e-4778-b15f-35c5b5b5c24d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGUI">
+      <UniqueIdentifier>{bcaed1b8-2f5f-4c87-b8c0-772b72d0616f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="launcher.cpp">
@@ -52,6 +55,18 @@
     </ClCompile>
     <ClCompile Include="goldsrc_hook.cpp">
       <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\ImGUI\imgui.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\ImGUI\imgui_demo.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\ImGUI\imgui_draw.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\ImGUI\imgui_impl_sdl.cpp">
+      <Filter>ImGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +127,27 @@
     </ClInclude>
     <ClInclude Include="goldsrc_patterns.hpp">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\imconfig.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\imgui.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\imgui_impl_sdl.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\imgui_internal.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\stb_rect_pack.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\stb_textedit.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\stb_truetype.h">
+      <Filter>ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
