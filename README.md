@@ -8,6 +8,8 @@ New features / parameters:
 - `-textmode` - currently allocates console
 - Debug build doesn't unlink DLLs and create mutex.
 - Now stencil buffer is enabled and available for stencil shadows implementation!
+- OpenGL context version - 2
+- ImGUI integration
 
 Half Life 1 SDK LICENSE
 ======================
