@@ -9,14 +9,13 @@
 #include <gl/GL.h>
 
 _SDL_CreateWindow ORIG_SDL_CreateWindow = NULL;
-_SDL_GL_SetAttribute ORIG_SDL_GL_SetAttribute = NULL;
 _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow = NULL;
 
 SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int h, Uint32 flags)
 {
-	ORIG_SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-	ORIG_SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-	ORIG_SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	return ORIG_SDL_CreateWindow(title, x, y, w, h, flags);
 }
 
@@ -42,13 +41,12 @@ void HookSDL2()
 	// Get SDL functions
 	HMODULE hSdl2 = GetModuleHandle("SDL2.dll");
 	ORIG_SDL_CreateWindow = (_SDL_CreateWindow)GetProcAddress(hSdl2, "SDL_CreateWindow");
-	ORIG_SDL_GL_SetAttribute = (_SDL_GL_SetAttribute)GetProcAddress(hSdl2, "SDL_GL_SetAttribute");
 	ORIG_SDL_GL_SwapWindow = (_SDL_GL_SwapWindow)GetProcAddress(hSdl2, "SDL_GL_SwapWindow");
 
-	if (ORIG_SDL_CreateWindow && ORIG_SDL_GL_SetAttribute)
-		printf("[SDL2.dll] Got SDL_CreateWindow & SDL_GL_SetAttribute! Setting up stencil buffer...\n");
+	if (ORIG_SDL_CreateWindow)
+		printf("[SDL2.dll] Got SDL_CreateWindow! Setting up stencil buffer...\n");
 	else
-		printf("[SDL2.dll] Can't get SDL_CreateWindow & SDL_GL_SetAttribute! There will be no stencil buffer.\n");
+		printf("[SDL2.dll] Can't get SDL_CreateWindow! There will be no stencil buffer.\n");
 
 	if (ORIG_SDL_GL_SwapWindow)
 		printf("[SDL2.dll] Got SDL_GL_SwapWindow! Now you can use ImGUI...\n");
