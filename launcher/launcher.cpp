@@ -286,7 +286,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		CSysModule* hLibModule = Sys_LoadModule(pszLibFileName);
 
+		HookSDL2();
 		HookEngine(); // it must be here!!!
+		MH_EnableHook(MH_ALL_HOOKS);
 
 		if (hLibModule)
 		{

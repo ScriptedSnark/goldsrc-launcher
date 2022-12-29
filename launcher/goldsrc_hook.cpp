@@ -35,21 +35,8 @@ int ImGUI_ProcessEvent(void* data, SDL_Event* event)
 	return ImGui_ImplSdl_ProcessEvent(event);
 }
 
-void HookEngine()
+void HookSDL2()
 {
-	void* handle;
-	void* base;
-	size_t size;
-
-	if (!MemUtils::GetModuleInfo(L"hw.dll", &handle, &base, &size))
-	{
-		printf("[hl.exe] Can't get module info about hw.dll! Stopping hooking...\n");
-		return;
-	}
-
-	Utils utils = Utils::Utils(handle, base, size);
-	printf("[hl.exe] Hooked hw.dll!\n");
-
 	// Get SDL functions
 	HMODULE hSdl2 = GetModuleHandle("SDL2.dll");
 	ORIG_SDL_CreateWindow = (_SDL_CreateWindow)GetProcAddress(hSdl2, "SDL_CreateWindow");
@@ -57,14 +44,14 @@ void HookEngine()
 	ORIG_SDL_GL_SwapWindow = (_SDL_GL_SwapWindow)GetProcAddress(hSdl2, "SDL_GL_SwapWindow");
 
 	if (ORIG_SDL_CreateWindow && ORIG_SDL_GL_SetAttribute)
-		printf("[hl.exe] Got SDL_CreateWindow & SDL_GL_SetAttribute! Setting up stencil buffer...\n");
+		printf("[SDL2.dll] Got SDL_CreateWindow & SDL_GL_SetAttribute! Setting up stencil buffer...\n");
 	else
-		printf("[hl.exe] Can't get SDL_CreateWindow & SDL_GL_SetAttribute! There will be no stencil buffer.\n");
+		printf("[SDL2.dll] Can't get SDL_CreateWindow & SDL_GL_SetAttribute! There will be no stencil buffer.\n");
 
 	if (ORIG_SDL_GL_SwapWindow)
-		printf("[hl.exe] Got SDL_GL_SwapWindow! Now you can use ImGUI...\n");
+		printf("[SDL2.dll] Got SDL_GL_SwapWindow! Now you can use ImGUI...\n");
 	else
-		printf("[hl.exe] Can't get SDL_GL_SwapWindow! There will be no ImGUI.\n");
+		printf("[SDL2.dll] Can't get SDL_GL_SwapWindow! There will be no ImGUI.\n");
 
 	if (ORIG_SDL_CreateWindow)
 	{
@@ -82,6 +69,20 @@ void HookEngine()
 
 		SDL_AddEventWatch(ImGUI_ProcessEvent, NULL);
 	}
+}
 
-	MH_EnableHook(MH_ALL_HOOKS);
+void HookEngine()
+{
+	void* handle;
+	void* base;
+	size_t size;
+
+	if (!MemUtils::GetModuleInfo(L"hw.dll", &handle, &base, &size))
+	{
+		printf("[hl.exe] Can't get module info about hw.dll! Stopping hooking...\n");
+		return;
+	}
+
+	Utils utils = Utils::Utils(handle, base, size);
+	printf("[hl.exe] Hooked hw.dll!\n");
 }

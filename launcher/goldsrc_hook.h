@@ -18,6 +18,7 @@ extern _SDL_CreateWindow ORIG_SDL_CreateWindow;
 extern _SDL_GL_SetAttribute ORIG_SDL_GL_SetAttribute;
 extern _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow;
 
+void HookSDL2();
 void HookEngine();
 
 #endif //GOLDSRC_HOOK_H_GUARD
