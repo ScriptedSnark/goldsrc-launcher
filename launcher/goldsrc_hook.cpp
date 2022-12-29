@@ -14,6 +14,8 @@ _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow = NULL;
 
 SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int h, Uint32 flags)
 {
+	ORIG_SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	ORIG_SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 	ORIG_SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	return ORIG_SDL_CreateWindow(title, x, y, w, h, flags);
 }
