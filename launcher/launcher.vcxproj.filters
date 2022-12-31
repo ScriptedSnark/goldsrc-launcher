@@ -68,6 +68,15 @@
     <ClCompile Include="..\external\ImGUI\imgui_impl_sdl.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\external\ImGUI\imgui_impl_opengl2.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\ImGUI\imgui_tables.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\ImGUI\imgui_widgets.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hl.rc">
@@ -140,13 +149,16 @@
     <ClInclude Include="..\external\ImGUI\imgui_internal.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\external\ImGUI\stb_rect_pack.h">
+    <ClInclude Include="..\external\ImGUI\imgui_impl_opengl2.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\external\ImGUI\stb_textedit.h">
+    <ClInclude Include="..\external\ImGUI\imstb_rectpack.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\external\ImGUI\stb_truetype.h">
+    <ClInclude Include="..\external\ImGUI\imstb_textedit.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\external\ImGUI\imstb_truetype.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,35 +5,46 @@
 
 #include "ImGUI/imgui.h"
 #include "ImGUI/imgui_impl_sdl.h"
+#include "ImGUI/imgui_impl_opengl2.h"
 
 #include <gl/GL.h>
 
 _SDL_CreateWindow ORIG_SDL_CreateWindow = NULL;
 _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow = NULL;
+SDL_Window* goldsrcWindow;
 
 SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int h, Uint32 flags)
 {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-	return ORIG_SDL_CreateWindow(title, x, y, w, h, flags);
+	
+	goldsrcWindow = ORIG_SDL_CreateWindow(title, x, y, w, h, flags);
+
+	ImGui_ImplOpenGL2_Init();
+	ImGui_ImplSDL2_InitForOpenGL(goldsrcWindow, ImGui::GetCurrentContext());
+
+	return goldsrcWindow;
 }
 
 void HOOKED_SDL_GL_SwapWindow(SDL_Window* window)
 {
-	ImGui_ImplSdl_NewFrame(window);
+	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame(window);
+	ImGui::NewFrame();
 
-	//ImGui::ShowTestWindow();
+	ImGui::ShowDemoWindow();
 
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 	ORIG_SDL_GL_SwapWindow(window);
 }
 
 int ImGUI_ProcessEvent(void* data, SDL_Event* event)
 {
-	return ImGui_ImplSdl_ProcessEvent(event);
+	return ImGui_ImplSDL2_ProcessEvent(event);
 }
 
 void HookSDL2()
@@ -57,14 +68,22 @@ void HookSDL2()
 	{
 		void* pSDL_CreateWindow = (void*)ORIG_SDL_CreateWindow;
 		MH_CreateHook(pSDL_CreateWindow, (void*)HOOKED_SDL_CreateWindow, (void**)&ORIG_SDL_CreateWindow);
+		MH_EnableHook(pSDL_CreateWindow);
 	}
 
 	if (ORIG_SDL_GL_SwapWindow)
 	{
+		// Setup Dear ImGui context
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		(void)io;
+
+		io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+
 		void* pSDL_GL_SwapWindow = (void*)ORIG_SDL_GL_SwapWindow;
 		MH_CreateHook(pSDL_GL_SwapWindow, (void*)HOOKED_SDL_GL_SwapWindow, (void**)&ORIG_SDL_GL_SwapWindow);
-
-		ImGui_ImplSdl_Init(SDL_GetWindowFromID(1));
+		MH_EnableHook(pSDL_GL_SwapWindow);
 
 		SDL_AddEventWatch(ImGUI_ProcessEvent, NULL);
 	}
