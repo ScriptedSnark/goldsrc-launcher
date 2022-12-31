@@ -80,6 +80,9 @@
     <ClCompile Include="imgui_manager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="plugins_loader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hl.rc">
@@ -165,6 +168,9 @@
       <Filter>ImGUI</Filter>
     </ClInclude>
     <ClInclude Include="imgui_manager.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="plugins_loader.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

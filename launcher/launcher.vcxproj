@@ -115,6 +115,7 @@
     <ClCompile Include="..\external\SPTLib\DetoursUtils.cpp" />
     <ClCompile Include="..\public\interface.cpp" />
     <ClCompile Include="..\public\registry.cpp" />
+    <ClCompile Include="plugins_loader.cpp" />
     <ClCompile Include="goldsrc_hook.cpp" />
     <ClCompile Include="imgui_manager.cpp" />
     <ClCompile Include="launcher.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="goldsrc_hook.h" />
     <ClInclude Include="goldsrc_patterns.hpp" />
     <ClInclude Include="imgui_manager.hpp" />
+    <ClInclude Include="plugins_loader.hpp" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
