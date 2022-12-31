@@ -116,6 +116,7 @@
     <ClCompile Include="..\public\interface.cpp" />
     <ClCompile Include="..\public\registry.cpp" />
     <ClCompile Include="goldsrc_hook.cpp" />
+    <ClCompile Include="imgui_manager.cpp" />
     <ClCompile Include="launcher.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="..\external\SPTLib\Utils.hpp" />
     <ClInclude Include="goldsrc_hook.h" />
     <ClInclude Include="goldsrc_patterns.hpp" />
+    <ClInclude Include="imgui_manager.hpp" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

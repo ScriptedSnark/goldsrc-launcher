@@ -77,6 +77,9 @@
     <ClCompile Include="..\external\ImGUI\imgui_widgets.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
+    <ClCompile Include="imgui_manager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hl.rc">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="..\external\ImGUI\imstb_truetype.h">
       <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_manager.hpp">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

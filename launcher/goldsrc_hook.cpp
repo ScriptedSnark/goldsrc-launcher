@@ -3,11 +3,11 @@
 #include "MinHook.h"
 #include "Utils.hpp"
 
-#include "ImGUI/imgui.h"
-#include "ImGUI/imgui_impl_sdl.h"
-#include "ImGUI/imgui_impl_opengl2.h"
+#include "imgui_manager.hpp"
 
 #include <gl/GL.h>
+
+CImGuiManager imgui;
 
 _SDL_CreateWindow ORIG_SDL_CreateWindow = NULL;
 _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow = NULL;
@@ -21,30 +21,15 @@ SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int 
 	
 	goldsrcWindow = ORIG_SDL_CreateWindow(title, x, y, w, h, flags);
 
-	ImGui_ImplOpenGL2_Init();
-	ImGui_ImplSDL2_InitForOpenGL(goldsrcWindow, ImGui::GetCurrentContext());
+	imgui.InitBackends(goldsrcWindow);
 
 	return goldsrcWindow;
 }
 
 void HOOKED_SDL_GL_SwapWindow(SDL_Window* window)
 {
-	ImGui_ImplOpenGL2_NewFrame();
-	ImGui_ImplSDL2_NewFrame(window);
-	ImGui::NewFrame();
-
-	ImGui::ShowDemoWindow();
-
-	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
-	ImGui::Render();
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-
+	imgui.Draw(window);
 	ORIG_SDL_GL_SwapWindow(window);
-}
-
-int ImGUI_ProcessEvent(void* data, SDL_Event* event)
-{
-	return ImGui_ImplSDL2_ProcessEvent(event);
 }
 
 void HookSDL2()
@@ -73,19 +58,13 @@ void HookSDL2()
 
 	if (ORIG_SDL_GL_SwapWindow)
 	{
-		// Setup Dear ImGui context
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
-		(void)io;
-
-		io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+		imgui.Init();
 
 		void* pSDL_GL_SwapWindow = (void*)ORIG_SDL_GL_SwapWindow;
 		MH_CreateHook(pSDL_GL_SwapWindow, (void*)HOOKED_SDL_GL_SwapWindow, (void**)&ORIG_SDL_GL_SwapWindow);
 		MH_EnableHook(pSDL_GL_SwapWindow);
 
-		SDL_AddEventWatch(ImGUI_ProcessEvent, NULL);
+		SDL_AddEventWatch(ImGui_ProcessEvent, NULL);
 	}
 }
 
