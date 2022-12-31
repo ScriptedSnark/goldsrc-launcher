@@ -13,6 +13,10 @@ _SDL_CreateWindow ORIG_SDL_CreateWindow = NULL;
 _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow = NULL;
 SDL_Window* goldsrcWindow;
 
+//-----------------------------------------------------------------------------
+// By hooking SDL_CreateWindow we set attributes and init ImGUI backends
+// Result: goldsrcWindow (original SDL_Window* from engine)
+//-----------------------------------------------------------------------------
 SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int h, Uint32 flags)
 {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -26,12 +30,18 @@ SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int 
 	return goldsrcWindow;
 }
 
+//-----------------------------------------------------------------------------
+// By hooking SDL_GL_SwapWindow we can render ImGui
+//-----------------------------------------------------------------------------
 void HOOKED_SDL_GL_SwapWindow(SDL_Window* window)
 {
 	imgui.Draw(window);
 	ORIG_SDL_GL_SwapWindow(window);
 }
 
+//-----------------------------------------------------------------------------
+// Hook SDL2.dll
+//-----------------------------------------------------------------------------
 void HookSDL2()
 {
 	// Get SDL functions
@@ -68,6 +78,9 @@ void HookSDL2()
 	}
 }
 
+//-----------------------------------------------------------------------------
+// Hook hw.dll
+//-----------------------------------------------------------------------------
 void HookEngine()
 {
 	void* handle;
