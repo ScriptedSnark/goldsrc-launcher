@@ -17,11 +17,14 @@ jobs:
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1.0.3
       - name: Build
-        run: MSBuild.exe launcher/launcher.vcxproj /p:Configuration=Release
+        run: |
+            MSBuild.exe launcher/launcher.vcxproj /p:Configuration=Release
+            MSBuild.exe launcher/launcher.vcxproj /p:Configuration=Debug
       - name: Move builded EXE into specific directory
         run: |
             mkdir compiled
             mv launcher/Release/hl.exe ./compiled
+            mv launcher/Debug/hl.exe ./compiled/hl_debug.exe
       - name: Deploy
         uses: actions/upload-artifact@v2.2.4
         with:
