@@ -1,7 +1,6 @@
 #pragma once
 
 #ifdef _WIN32
-#define _CRT_SECURE_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <Windows.h>
@@ -30,3 +29,5 @@
 
 using std::uintptr_t;
 using std::size_t;
+
+#define stricmp _stricmp
