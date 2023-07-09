@@ -352,9 +352,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		g_pFileSystem->Unmount();
 		Sys_UnloadModule(hModule);
-	} while (bRestartEngine);
 
-	MH_Uninitialize();
+		MH_Uninitialize();
+	} while (bRestartEngine);
 
 	registry->Shutdown();
 
