@@ -25,7 +25,7 @@ SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int 
 	
 	goldsrcWindow = ORIG_SDL_CreateWindow(title, x, y, w, h, flags);
 
-	imgui.InitBackends(goldsrcWindow);
+	//imgui.InitBackends(goldsrcWindow);
 
 	return goldsrcWindow;
 }
@@ -35,7 +35,7 @@ SDL_Window* HOOKED_SDL_CreateWindow(const char* title, int x, int y, int w, int 
 //-----------------------------------------------------------------------------
 void HOOKED_SDL_GL_SwapWindow(SDL_Window* window)
 {
-	imgui.Draw(window);
+	//imgui.Draw(window);
 	ORIG_SDL_GL_SwapWindow(window);
 }
 
@@ -68,13 +68,13 @@ void HookSDL2()
 
 	if (ORIG_SDL_GL_SwapWindow)
 	{
-		imgui.Init();
+		//imgui.Init();
 
 		void* pSDL_GL_SwapWindow = (void*)ORIG_SDL_GL_SwapWindow;
 		MH_CreateHook(pSDL_GL_SwapWindow, (void*)HOOKED_SDL_GL_SwapWindow, (void**)&ORIG_SDL_GL_SwapWindow);
 		MH_EnableHook(pSDL_GL_SwapWindow);
 
-		SDL_AddEventWatch(ImGui_ProcessEvent, NULL);
+		//SDL_AddEventWatch(ImGui_ProcessEvent, NULL);
 	}
 }
 
