@@ -6,16 +6,21 @@
 #include <Windows.h>
 #include <WinSock2.h>
 
+#include "interface.h"
+#include "steam_api.h"
+#include "steamapi_context.h"
+
 #include <io.h>
 
 #include "engine_launcher_api.h"
 #include "FileSystem.h"
 #include "ICommandLine.h"
-#include "interface.h"
 #include "IRegistry.h"
 
 #include "MinHook.h"
 #include "goldsrc_hook.h"
+
+void HookWinAPI();
 
 #define HARDWARE_ENGINE "hw.dll"
 #define SOFTWARE_ENGINE "sw.dll"
@@ -288,6 +293,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		HookSDL2();
 		HookEngine(); // it must be here!!!
+		HookWinAPI();
+		HookSteamAPI();
+
 		MH_EnableHook(MH_ALL_HOOKS);
 
 		if (hLibModule)

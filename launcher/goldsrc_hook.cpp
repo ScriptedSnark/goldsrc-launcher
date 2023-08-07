@@ -1,7 +1,16 @@
-#include "goldsrc_hook.h"
+#include <WinSock2.h>
+#include "steam_api.h"
+#include "steamapi_context.h"
+
+#include "netadr.h"
+#include "net.h"
+#include "sv_main.h"
 
 #include "MinHook.h"
 #include "Utils.hpp"
+
+#include "goldsrc_patterns.hpp"
+#include "goldsrc_hook.h"
 
 #include "imgui_manager.hpp"
 
@@ -11,6 +20,10 @@ CImGuiManager imgui;
 
 _SDL_CreateWindow ORIG_SDL_CreateWindow = NULL;
 _SDL_GL_SwapWindow ORIG_SDL_GL_SwapWindow = NULL;
+
+_SteamAPI_Init ORIG_SteamAPI_Init = NULL;
+_SteamAPI_Shutdown ORIG_SteamAPI_Shutdown = NULL;
+
 SDL_Window* goldsrcWindow;
 
 //-----------------------------------------------------------------------------
@@ -95,4 +108,8 @@ void HookEngine()
 
 	Utils utils = Utils::Utils(handle, base, size);
 	printf("[hl.exe] Hooked hw.dll!\n");
+
+	Hook(NET_StringToAdr);
+	Hook(NET_AdrToString);
+	Hook(SV_CheckIPRestrictions);
 }

@@ -46,13 +46,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>.\$(Configuration)\</OutDir>
+    <OutDir>C:\Program Files (x86)\Steam\steamapps\common\Half-Life\</OutDir>
     <IntDir>.\$(Configuration)\</IntDir>
     <TargetName>hl</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>.\$(Configuration)\</OutDir>
+    <OutDir>C:\Program Files (x86)\Steam\steamapps\common\Half-Life\</OutDir>
     <IntDir>.\$(Configuration)\</IntDir>
     <TargetName>hl</TargetName>
   </PropertyGroup>
@@ -65,7 +65,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../public;../common;../external;../external/SPTLib;../external/MinHook;../external/steamworks/steam</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../public;../common;../external;../external/SPTLib;../external/MinHook;../external/steamworks/steam;../engine;../launcher</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -86,7 +86,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../public;../common;../external;../external/SPTLib;../external/MinHook;../external/steamworks/steam</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../public;../common;../external;../external/SPTLib;../external/MinHook;../external/steamworks/steam;../engine;../launcher</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -100,6 +100,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CCommandLine.cpp" />
+    <ClCompile Include="..\engine\net_ws.cpp" />
+    <ClCompile Include="..\engine\sv_main.cpp" />
     <ClCompile Include="..\external\ImGUI\imgui.cpp" />
     <ClCompile Include="..\external\ImGUI\imgui_demo.cpp" />
     <ClCompile Include="..\external\ImGUI\imgui_draw.cpp" />
@@ -119,8 +121,12 @@
     <ClCompile Include="goldsrc_hook.cpp" />
     <ClCompile Include="imgui_manager.cpp" />
     <ClCompile Include="launcher.cpp" />
+    <ClCompile Include="steam_api.cpp" />
+    <ClCompile Include="winapi.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\engine\net.h" />
+    <ClInclude Include="..\engine\sv_main.h" />
     <ClInclude Include="..\external\ImGUI\imconfig.h" />
     <ClInclude Include="..\external\ImGUI\imgui.h" />
     <ClInclude Include="..\external\ImGUI\imgui_impl_opengl2.h" />
@@ -147,6 +153,7 @@
     <ClInclude Include="imgui_manager.hpp" />
     <ClInclude Include="plugins_loader.hpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="steamapi_context.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hl.rc" />

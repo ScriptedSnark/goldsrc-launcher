@@ -2,13 +2,13 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerCommand>C:\Program Files (x86)\Steam\steamapps\common\Half-Life\hl.exe</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments>-textmode -windowed -dev</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-textmode -windowed -dev -insecure -nofbo</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>C:\Program Files (x86)\Steam\steamapps\common\Half-Life</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>C:\Program Files (x86)\Steam\steamapps\common\Half-Life\hl.exe</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments>-textmode -windowed -dev</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-textmode -windowed -dev -insecure -nofbo</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>C:\Program Files (x86)\Steam\steamapps\common\Half-Life</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
