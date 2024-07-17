@@ -183,7 +183,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 #endif
 
+#ifdef DEBUG
 	MH_Initialize();
+#endif
 
 	WSADATA WSAData;
 	::WSAStartup(MAKEWORD(2, 0), &WSAData);
@@ -286,9 +288,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		CSysModule* hLibModule = Sys_LoadModule(pszLibFileName);
 
+#ifdef DEBUG
 		HookSDL2();
 		HookEngine(); // it must be here!!!
 		MH_EnableHook(MH_ALL_HOOKS);
+#endif
 
 		if (hLibModule)
 		{
@@ -353,7 +357,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		g_pFileSystem->Unmount();
 		Sys_UnloadModule(hModule);
 
+#ifdef DEBUG
 		MH_Uninitialize();
+#endif
 	} while (bRestartEngine);
 
 	registry->Shutdown();
